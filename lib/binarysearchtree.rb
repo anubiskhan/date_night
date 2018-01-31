@@ -1,4 +1,5 @@
 require 'pry'
+require './lib/node.rb'
 
 class BinarySearchTree
   attr_reader :root
@@ -6,35 +7,44 @@ class BinarySearchTree
     @root = nil
   end
 
-  def create_node(score, movie_title)
-    Node.new(score, movie_title)
-  end
-
   def insert(score, movie_title, compare = @root)
-    binding.pry
+    current = Node.new(score, movie_title)
     if @root.nil?
-      @root = create_node(score, movie_title)
+      @root = current
     elsif score > compare.score
-      install_right?(compare)
+      binding.pry
+      install_right(score, movie_title)
     elsif score < compare.score
-      install_left?(compare)
+      install_left(current)
     end
   end
 
-  def install_right?(current)
-    if current.right?
-      insert(score, movie_title, current.right)
+  def install_right(score, movie_title)
+    if current.right.nil?
+      binding.pry
+      insert(score, movie_title)
     else
-      current.right = create_node(score, movie_title)
+      current.right = current
     end
   end
 
-  def install_left?(current)
-    if current.left?
-      insert(score, movie_title, current.left)
+  def install_left(current)
+    if current.left.nil?
+      insert(current.score, current.movie_title, compare.left)
+      binding.pry
     else
-      current.left = create_node(score, movie_title)
+      compare.left = current
     end
   end
 
+  def include?(score)
+
+  end
 end
+btree = BinarySearchTree.new
+btree.insert(70, 'cats')
+p 'root established'
+btree.insert(80, 'dogs')
+puts 'second node established'
+#
+# binding.pry

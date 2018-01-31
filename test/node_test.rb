@@ -6,6 +6,7 @@ require './lib/node.rb'
 class NodeTest < Minitest::Test
   def test_node_initializes
     node = Node.new(61, "Bill & Ted's Excellent Adventure")
+    assert_instance_of Node, node
     assert_equal node.score, 61
     assert_equal node.movie_title, "Bill & Ted's Excellent Adventure"
     assert_equal node.left, nil
