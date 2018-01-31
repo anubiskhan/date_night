@@ -12,28 +12,25 @@ class BinarySearchTree
     if @root.nil?
       @root = current
     elsif score > compare.score
-      binding.pry
-      install_right(score, movie_title)
+      install_right(current, compare)
     elsif score < compare.score
-      install_left(current)
+      install_left(current, compare)
     end
   end
 
-  def install_right(score, movie_title)
-    if current.right.nil?
-      binding.pry
-      insert(score, movie_title)
+  def install_right(current, compare)
+    if compare.right.nil?
+      compare.right = current
     else
-      current.right = current
+      insert(current.score, current.movie_title)
     end
   end
 
-  def install_left(current)
-    if current.left.nil?
-      insert(current.score, current.movie_title, compare.left)
-      binding.pry
+  def install_left(current, compare)
+    if compare.left.nil?
+      compare.right = current
     else
-      compare.left = current
+      insert(current.score, current.movie_title)
     end
   end
 
@@ -41,10 +38,11 @@ class BinarySearchTree
 
   end
 end
-btree = BinarySearchTree.new
-btree.insert(70, 'cats')
-p 'root established'
-btree.insert(80, 'dogs')
-puts 'second node established'
+# btree = BinarySearchTree.new
+# btree.insert(70, 'cats')
+# p 'root established'
+# btree.insert(80, 'dogs')
+# puts 'second node established'
+# puts btree.compare
 #
 # binding.pry

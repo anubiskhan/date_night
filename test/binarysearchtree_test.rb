@@ -21,8 +21,10 @@ class BinarySearchTreeTest < Minitest::Test
   def test_root_insert
     btree = BinarySearchTree.new()
     btree.insert(61, "bill")
+    btree.insert(70, "fish")
     assert_equal 61, btree.root.score
     assert_equal "bill", btree.root.movie_title
+    binding.pry
   end
 
   # def test_install_right
