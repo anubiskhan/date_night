@@ -6,7 +6,7 @@ class BinarySearchTree
   def initialize()
     @root = nil
   end
-
+#Compare needs to compare against the lowest node, not the original node
   def insert(score, movie_title, compare = @root)
     current = Node.new(score, movie_title)
     if @root.nil?
@@ -22,15 +22,17 @@ class BinarySearchTree
     if compare.right.nil?
       compare.right = current
     else
-      insert(current.score, current.movie_title)
+      compare = compare.right
+      insert(current.score, current.movie_title, compare)
     end
   end
 
   def install_left(current, compare)
     if compare.left.nil?
-      compare.right = current
+      compare.left = current
     else
-      insert(current.score, current.movie_title)
+      compare = compare.left
+      insert(current.score, current.movie_title, compare)
     end
   end
 
@@ -38,11 +40,12 @@ class BinarySearchTree
 
   end
 end
-# btree = BinarySearchTree.new
-# btree.insert(70, 'cats')
+tree = BinarySearchTree.new
+tree.insert(70, 'cats')
 # p 'root established'
-# btree.insert(80, 'dogs')
-# puts 'second node established'
-# puts btree.compare
+tree.insert(80, 'dogs')
+tree.insert(90, 'stuff')
+tree.insert(60, 'stuff')
+
 #
 # binding.pry
