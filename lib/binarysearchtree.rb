@@ -100,7 +100,6 @@ class BinarySearchTree
   end
 
   def load(file_name)
-    movies = []
     movies_inserted = 0
     File.open(file_name) do |file|
       file.read.split("\n").each do |line|
@@ -114,7 +113,28 @@ class BinarySearchTree
     movies_inserted
   end
 
-  def health
+  def health(target_depth = 0)
+    health_array = []
+    total_nodes = sort.length
+    #just needs the find @ depth functionality and the rest is easy
+    #sort is every node
+    #run depth_of? on every node i.e. tree.sort
+    #catalog that score => depth pair
+    #search the hash for values that match target depth
+    #sort(node that has a matching depth).length gives children
+    #sort.length gives total_nodes
+    nodes_hash = sort.each do |node|
+      depth_of?(node.score)
+      (
+        {current_node.score => depth}
+      )
+      end
+    if nodes_hash.score == depth
+      health_array
+    end
 
+    health_percent = ((health_children/total_nodes).to_f * 100)
+
+    health_array.push(current_node.score, health_children, health_percent)
   end
 end
