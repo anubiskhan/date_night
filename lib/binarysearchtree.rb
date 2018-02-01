@@ -115,26 +115,23 @@ class BinarySearchTree
 
   def health(target_depth = 0)
     health_array = []
-    total_nodes = sort.length
-    #just needs the find @ depth functionality and the rest is easy
-    #sort is every node
-    #run depth_of? on every node i.e. tree.sort
-    #catalog that score => depth pair
-    #search the hash for values that match target depth
-    #sort(node that has a matching depth).length gives children
-    #sort.length gives total_nodes
-    nodes_hash = sort.each do |node|
-      depth_of?(node.score)
-      (
-        {current_node.score => depth}
-      )
-      end
-    if nodes_hash.score == depth
-      health_array
+    nodes_array = sort.map do |element|
+      {element.values[0] => depth_of?(element.values[0])}
     end
+    nodes_array.each do |value|
+      if value.values[0] == target_depth
+        health_array.push(health_array_builder(value.keys[0]))
 
-    health_percent = ((health_children/total_nodes).to_f * 100)
+      end
+    end
+    health_array
+  end
 
-    health_array.push(current_node.score, health_children, health_percent)
+  def health_array_builder(score)
+    total_nodes = sort.length
+
+    node_child_count = sort(score).length
+    health_percent = ((node_child_count/total_nodes).to_f * 100).to_i
+    health_array.push([current_node.score, node_child_count, health_percent])
   end
 end
