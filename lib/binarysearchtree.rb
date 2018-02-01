@@ -55,20 +55,18 @@ class BinarySearchTree
   end
 
   def depth_of?(score, current_node = @root, depth = 0)
-    if @root.nil?
+    if @root.nil? or score == current_node.score
       depth
     elsif score > current_node.score
       if current_node.right.nil?
-        depth += 1
+        nil
       else
-        # depth += 1
         depth_of?(score, current_node.right, depth += 1)
       end
     elsif score < current_node.score
       if current_node.left.nil?
-        depth += 1
+        nil
       else
-       # depth += 1
        depth_of?(score, current_node.left, depth += 1)
       end
     end
@@ -94,13 +92,29 @@ class BinarySearchTree
     end
   end
 
-  def sort
-
+  def sort(current_node=@root, sorted=[])
+     sort(current_node.left, sorted) if current_node.left
+     sorted.push({current_node.movie_title => current_node.score})
+     sort(current_node.right, sorted) if current_node.right
+     sorted
   end
 
   def load(file_name)
     movies = []
-    File.open(file_name, )
+    movies_inserted = 0
+    File.open(file_name) do |file|
+      file.read.split("\n").each do |line|
+          movies_inserted += 1
+          parts = line.split(',')
+          score = parts.shift.to_i
+          title = parts.join(',')
+          insert(score, title)
+      end
+    end
+    movies_inserted
   end
 
+  def health
+
+  end
 end

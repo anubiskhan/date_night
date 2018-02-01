@@ -27,7 +27,6 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal "Sharknado 3", tree.root.right.movie_title
     assert_equal 50, tree.root.left.right.score
     assert_equal "Hannibal Buress: Animal Furnace", tree.root.left.right.movie_title
-    binding.pry
   end
 
   def test_install_right
@@ -105,7 +104,7 @@ class BinarySearchTreeTest < Minitest::Test
   def test_load
     tree = BinarySearchTree.new()
 
-    assert_equal 99, tree.load("movies.txt")
+    assert_equal 99, tree.load("./lib/movies.txt")
   end
 
   def test_health
