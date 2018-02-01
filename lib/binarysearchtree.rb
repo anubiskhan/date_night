@@ -129,7 +129,7 @@ class BinarySearchTree
 
   def health_array_builder(score)
     total_nodes = sort.length
-
+    #needs to find node using score then pass score_node into node_child_count
     node_child_count = sort(score).length
     health_percent = ((node_child_count/total_nodes).to_f * 100).to_i
     health_array.push([current_node.score, node_child_count, health_percent])
