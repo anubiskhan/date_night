@@ -6,46 +6,101 @@ class BinarySearchTree
   def initialize()
     @root = nil
   end
-#Compare needs to compare against the lowest node, not the original node
-  def insert(score, movie_title, compare = @root)
-    current = Node.new(score, movie_title)
+
+  def insert(score, movie_title, current_node = @root)
+    node = Node.new(score, movie_title)
     if @root.nil?
-      @root = current
-    elsif score > compare.score
-      install_right(current, compare)
-    elsif score < compare.score
-      install_left(current, compare)
+      @root = node
+    elsif score > current_node.score
+      install_right(node, current_node)
+    elsif score < current_node.score
+      install_left(node, current_node)
     end
   end
 
-  def install_right(current, compare)
-    if compare.right.nil?
-      compare.right = current
+  def install_right(node, current_node)
+    if current_node.right.nil?
+      current_node.right = node
     else
-      compare = compare.right
-      insert(current.score, current.movie_title, compare)
+      insert(node.score, node.movie_title, current_node.right)
     end
   end
 
-  def install_left(current, compare)
-    if compare.left.nil?
-      compare.left = current
+  def install_left(node, current_node)
+    if current_node.left.nil?
+      current_node.left = node
     else
-      compare = compare.left
-      insert(current.score, current.movie_title, compare)
+      insert(node.score, node.movie_title, current_node.left)
     end
   end
 
-  def include?(score)
+  def include?(score, current_node = @root)
+    if @root.nil?
+      false
+    elsif score > current_node.score
+      if current_node.right.nil?
+        false
+      else
+        include?(score, current_node.right)
+      end
+    elsif score < current_node.score
+      if current_node.left.nil?
+        false
+      else
+        include?(score, current_node.left)
+      end
+    else
+      true
+    end
+  end
+
+  def depth_of?(score, current_node = @root, depth = 0)
+    if @root.nil?
+      depth
+    elsif score > current_node.score
+      if current_node.right.nil?
+        depth += 1
+      else
+        # depth += 1
+        depth_of?(score, current_node.right, depth += 1)
+      end
+    elsif score < current_node.score
+      if current_node.left.nil?
+        depth += 1
+      else
+       # depth += 1
+       depth_of?(score, current_node.left, depth += 1)
+      end
+    end
+  end
+
+  def max(current_node = @root)
+    if current_node.nil?
+      {}
+    elsif current_node.right.nil?
+      {current_node.movie_title => current_node.score}
+    else
+      max(current_node.right)
+    end
+  end
+
+  def min(current_node = @root)
+    if current_node.nil?
+      {}
+    elsif current_node.left.nil?
+      {current_node.movie_title => current_node.score}
+    else
+      min(current_node.left)
+    end
+  end
+
+  def sort
 
   end
+
+  def load(file_name)
+    movies = []
+    File.open(file_name, )
+  end
+
 end
-tree = BinarySearchTree.new
-tree.insert(70, 'cats')
-# p 'root established'
-tree.insert(80, 'dogs')
-tree.insert(90, 'stuff')
-tree.insert(60, 'stuff')
-
-#
-# binding.pry
